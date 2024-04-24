@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:watch": "vite build --watch",
     "preview": "vite preview"
   },
   "devDependencies": {
     "typescript": "^5.3.3",
     "vite": "^5.0.11",
-    "vite-plugin-monkey": "../vite-plugin-monkey/packages/vite-plugin-monkey"
+    "vite-plugin-monkey": "../../scriptcat/vite-plugin-monkey/packages/vite-plugin-monkey"
   },
   "dependencies": {
     "otpauth": "^9.2.3",
