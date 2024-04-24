@@ -17,7 +17,11 @@ migration.split("\n").forEach((line) => {
       ...URI.toOTPAuthURIs(line).map((uri) => {
         const url = new URL(uri);
         return new OTPAuth.TOTP({
-          issuer: url.searchParams.get("issuer") || url.hostname,
+          issuer:
+            url.searchParams.get("issuer") ||
+            decodeURIComponent(
+              url.pathname.substring(url.pathname.lastIndexOf("/") + 1)
+            ),
           algorithm: url.searchParams.get("algorithm") || "SHA1",
           digits: parseInt(url.searchParams.get("digits") || "6"),
           period: parseInt(url.searchParams.get("period") || "30"),
@@ -28,14 +32,13 @@ migration.split("\n").forEach((line) => {
   }
 });
 
-export default new Promise<void>((resolve) => {
+export default new Promise<void>(() => {
   const menuId: string[] = [];
   // 每分钟的0秒与30秒时刷新
   const refresh = () => {
     // 移除上次注册的菜单
     menuId.forEach((id) => GM_unregisterMenuCommand(id));
     totpList.forEach((totp) => {
-      console.log(totp.generate());
       // 注册新的菜单
       menuId.push(
         GM_registerMenuCommand(totp.issuer, () => {

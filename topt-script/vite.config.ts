@@ -8,6 +8,7 @@ export default defineConfig({
       entry: "src/main.ts",
       userscript: {
         name: "topt 动态密码",
+        description: "安装后会在脚本猫菜单页中定时刷新动态密码，点击即可复制",
         namespace: "https://scriptcat.org/",
         background: true,
       },
